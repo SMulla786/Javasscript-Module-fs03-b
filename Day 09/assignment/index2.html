@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -24,10 +25,8 @@
         height: 400px;
         width: 400px;
       }
-      .image-container:hover .caption {
-        opacity: 1;
-      }
     </style>
+    <title>Suhel Mulla</title>
   </head>
   <body>
     <div class="image-container">
@@ -36,11 +35,28 @@
     </div>
     <div class="image-container">
       <img src="https://images.alphacoders.com/598/598846.jpg" alt="Image 2" />
-      <div class="caption">Obito and madara</div>
+      <div class="caption">Obito and Madara</div>
     </div>
     <div class="image-container">
       <img src="https://images8.alphacoders.com/598/598786.jpg" alt="Image 3" />
-      <div class="caption">Naruto and Sasuke's family</div>
+      <div class="caption">Naruto and Sasuke's Family</div>
     </div>
+
+    <script>
+      const imageContainers = document.querySelectorAll(".image-container");
+
+      imageContainers.forEach((container) => {
+        const image = container.querySelector("img");
+        const caption = container.querySelector(".caption");
+
+        container.addEventListener("mouseover", () => {
+          caption.style.opacity = "1";
+        });
+
+        container.addEventListener("mouseout", () => {
+          caption.style.opacity = "0";
+        });
+      });
+    </script>
   </body>
 </html>
