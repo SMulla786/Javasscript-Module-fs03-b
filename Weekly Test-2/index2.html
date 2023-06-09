@@ -22,7 +22,10 @@
         font-size: 60px;
         margin-bottom: 20px;
       }
-        
+      .dark {
+      background-color: #333;
+      color: #fff;
+        }  
 /* ************ */ 
 .settings-option {
   padding: .5em 1em;
@@ -60,10 +63,7 @@
   vertical-align: middle; 
   
 }
-.coder-guy.dark {
-      background-color: #333;
-      color: #fff;
-    }
+
 
 .theme-toggler__switch::after {
   content: "";
@@ -109,7 +109,8 @@
     </div>
     <script>
         function toggleDarkTheme() {
-      var coderGuy = document.getElementById("coder-guy");
+      var coderGuy = document.getElementsByClassName("coder_guy")[0];
+      console.log(coderGuy);
       coderGuy.classList.toggle("dark");
     }
     </script>
