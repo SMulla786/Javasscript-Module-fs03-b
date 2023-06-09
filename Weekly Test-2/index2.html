@@ -13,6 +13,15 @@
         font-family: Arial, sans-serif;
         padding: 0;
       }
+      .coder_guy a{
+        background-color: green;
+        margin-top: 110px;
+        color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 4px;
+      }
       .coder_guy {
         text-align: center;
         background-color: whitesmoke;
@@ -111,6 +120,7 @@
         function toggleDarkTheme() {
       var coderGuy = document.getElementsByClassName("coder_guy")[0];
       console.log(coderGuy);
+      document.querySelector("nav").classList.toggle("dark");
       coderGuy.classList.toggle("dark");
     }
     </script>
