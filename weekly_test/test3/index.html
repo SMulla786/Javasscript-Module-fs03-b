@@ -3,19 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <h1>My ToDo List</h1>
-      <input type="text" placeholder="Title.." />
-    </header>
-    <main>
-      <div class="todo">
-        <span>&#x2713;</span>
-        <p>Hit the GYM</p>
-        <span>&#x2717;</span>
-      </div>
-    </main>
+    <div class="container">
+      <header>
+        <h1>My ToDo List</h1>
+        <div class="addTodo">
+          <input type="text" id="todoInput" placeholder="Title.." />
+          <button id="addButton">Add</button>
+        </div>
+      </header>
+      <main id="todosContainer">
+        <!-- <div class="todos checked">
+          <span>&#x2713;</span>
+          <p><s>Hit the GYM</s></p>
+          <span>&#x2717;</span>
+        </div> -->
+      </main>
+    </div>
+    <script src="./script.js"></script>
   </body>
 </html>
