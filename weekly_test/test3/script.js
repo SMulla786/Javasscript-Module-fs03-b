@@ -6,7 +6,7 @@ const todosContainer = document.getElementById("todosContainer");
 window.addEventListener("load", function () {
   const todos = JSON.parse(localStorage.getItem("todos")) || [];
   todos.forEach(function (todo) {
-    const newTodo = createTodoElement(todo.text, todo.checked);
+    const newTodo = createTodoElement(todo.text, todo.checked, todo.dateTime);
     todosContainer.appendChild(newTodo);
   });
 });
@@ -15,7 +15,8 @@ window.addEventListener("load", function () {
 addButton.addEventListener("click", function () {
   const todoText = todoInput.value;
   if (todoText.trim() !== "") {
-    const newTodo = createTodoElement(todoText, false);
+    const dateTime = new Date().toLocaleString();
+    const newTodo = createTodoElement(todoText, false, dateTime);
     todosContainer.appendChild(newTodo);
     saveTodosToLocalStorage();
     todoInput.value = "";
@@ -23,7 +24,7 @@ addButton.addEventListener("click", function () {
 });
 
 // Function to create a new todo element
-function createTodoElement(text, checked) {
+function createTodoElement(text, checked, dateTime) {
   const todo = document.createElement("div");
   todo.classList.add("todos");
   if (checked) {
@@ -39,6 +40,11 @@ function createTodoElement(text, checked) {
 
   const todoText = document.createElement("p");
   todoText.innerText = text;
+  todoText.classList.add("task");
+
+  const dateTimeText = document.createElement("span");
+  dateTimeText.classList.add("datetime");
+  dateTimeText.innerText = formatDateTime(dateTime);
 
   const deleteIcon = document.createElement("span");
   deleteIcon.innerHTML = "&#x2717;";
@@ -50,8 +56,21 @@ function createTodoElement(text, checked) {
   todo.appendChild(checkIcon);
   todo.appendChild(todoText);
   todo.appendChild(deleteIcon);
+  todo.appendChild(dateTimeText);
 
   return todo;
+}
+
+// Function to format date and time
+function formatDateTime(dateTime) {
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  return new Date(dateTime).toLocaleString(undefined, options);
 }
 
 // Function to save todos to local storage
@@ -60,6 +79,7 @@ function saveTodosToLocalStorage() {
     return {
       text: todo.querySelector("p").innerText,
       checked: todo.classList.contains("checked"),
+      dateTime: todo.querySelector(".datetime").innerText,
     };
   });
   localStorage.setItem("todos", JSON.stringify(todos));
