@@ -6,6 +6,69 @@
     <title>Document</title>
   </head>
   <body>
-    hi
+    <script>
+      localStorage.setItem("firstName", "Suhel");
+      localStorage.setItem("lastName", "Mulla");
+      localStorage.setItem("age", 23);
+      localStorage.setItem("country", "INDIA");
+      localStorage.setItem("city", "Pune");
+      document.write(localStorage.getItem("firstName"), "<br>");
+      const student = {
+        firstName: "suhel",
+        lastName: "mulla",
+        age: 23,
+        country: "india",
+        skills: ["HTML", "CSS", "Javascript", "java", "Python"],
+      };
+      localStorage.setItem("student", JSON.stringify(student));
+      // document.write(JSON.parse(localStorage.getItem("student")));
+      const IncomeManagement = {
+        firstName: "suhel",
+        lastName: "mulla",
+        incomes: new Map(),
+        expenses: new Map(),
+        calculateTotalIncome: function () {
+          var total = 0;
+          this.incomes.forEach(function (value, key) {
+            total += value;
+          });
+          return total;
+        },
+        calculateTotalExpense: function () {
+          var total = 0;
+          this.expenses.forEach(function (value, key) {
+            total += value;
+          });
+          return total;
+        },
+        getAccountInfo: function () {
+          return (
+            "<br>Name: " +
+            this.firstName +
+            " " +
+            this.lastName +
+            "<br>Income: " +
+            this.calculateTotalIncome() +
+            "<br>Expense: " +
+            this.calculateTotalExpense()
+          );
+        },
+        addIncome: function (description, amount) {
+          this.incomes.set(description, amount);
+        },
+        addExpense: function (description, amount) {
+          this.expenses.set(description, amount);
+        },
+        calculateAccountBalance: function () {
+          return this.calculateTotalIncome() - this.calculateTotalExpense();
+        },
+      };
+      IncomeManagement.addIncome("fromDad", 1000);
+      IncomeManagement.addIncome("fromBro", 3000);
+      IncomeManagement.addExpense("rent", 2600);
+      IncomeManagement.addExpense("food", 3500);
+
+      document.write(IncomeManagement.getAccountInfo());
+    </script>
   </body>
 </html>

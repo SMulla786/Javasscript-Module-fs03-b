@@ -1,0 +1,20 @@
+body {
+  display: block;
+  margin: 0;
+  justify-content: space-around;
+  /* padding: 1% 5%; */
+}
+nav {
+  display: flex;
+  color: rgb(238, 47, 47);
+  background-color: rgb(232, 226, 226);
+  padding: 1.2% 5%;
+  /* flex-direction:; */
+}
+nav #main-logo {
+  flex-grow: 1;
+}
+nav #SignIn {
+  display: flex;
+  gap: 40px;
+}
