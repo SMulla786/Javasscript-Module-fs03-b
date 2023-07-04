@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat Application</title>
+    <style>
+      body {
+        background-color: #f8f8f8;
+        font-family: Arial, sans-serif;
+      }
+
+      #chatContainer {
+        width: 400px;
+        margin: 0 auto;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #messageContainer {
+        padding: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .message {
+        margin-bottom: 10px;
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .message span {
+        display: inline-block;
+        background-color: #e5e5ea;
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      #inputContainer {
+        display: flex;
+        padding: 10px;
+        background-color: #f5f5f5;
+      }
+
+      #messageInput {
+        flex-grow: 1;
+        padding: 8px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+      }
+
+      #sendButton {
+        margin-left: 10px;
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        background-color: #075e54;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chatContainer">
+      <div id="messageContainer"></div>
+      <div id="inputContainer">
+        <input type="text" id="messageInput" placeholder="Type your message" />
+        <button id="sendButton">Send</button>
+      </div>
+    </div>
+
+    <script>
+      // Check if chat history is already stored in session storage
+      var chatHistory = JSON.parse(sessionStorage.getItem("chatHistory")) || [];
+
+      // Retrieve user preferences from local storage
+      var username = localStorage.getItem("username") || "Suhel";
+      var profilePicture =
+        localStorage.getItem("profilePicture") ||
+        "https://i.postimg.cc/0yM096YT/my-DP.jpg";
+
+      // Function to display the chat history
+      function displayChatHistory() {
+        var messageContainer = document.getElementById("messageContainer");
+        messageContainer.innerHTML = "";
+
+        chatHistory.forEach(function (message) {
+          var div = document.createElement("div");
+          div.innerHTML = `<img src="${message.profilePicture}" alt="Profile Picture">
+                        <span>${message.username}: ${message.text}</span>`;
+          messageContainer.appendChild(div);
+        });
+
+        // Scroll to the bottom of the message container
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      }
+
+      // Function to add a new message to the chat history
+      function addMessage(username, text, profilePicture) {
+        var message = {
+          username: username,
+          text: text,
+          profilePicture: profilePicture,
+        };
+
+        chatHistory.push(message);
+
+        // Save the updated chat history to session storage
+        sessionStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+
+        // Display the updated chat history
+        displayChatHistory();
+      }
+
+      // Function to handle sending a message
+      function sendMessage() {
+        var messageInput = document.getElementById("messageInput");
+        var text = messageInput.value.trim();
+
+        if (text !== "") {
+          addMessage(username, text, profilePicture);
+          messageInput.value = "";
+        }
+      }
+
+      // Add event listener for the send button
+      var sendButton = document.getElementById("sendButton");
+      sendButton.addEventListener("click", sendMessage);
+
+      // Add event listener for pressing Enter key in the input field
+      var messageInput = document.getElementById("messageInput");
+      messageInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      });
+
+      // Display the initial chat history
+      displayChatHistory();
+
+      // Simulate real-time notifications using setTimeout and setInterval
+      function simulateIncomingMessage() {
+        var users = [
+          {
+            username: "Naruto",
+            profilePicture:
+              "https://e7.pngegg.com/pngimages/209/319/png-clipart-naruto-uzumaki-nine-tailed-fox-sasuke-uchiha-kurama-naruto-manga-cartoon.png",
+          },
+          {
+            username: "Sasuke",
+            profilePicture: "https://images4.alphacoders.com/644/644138.jpg",
+          },
+          {
+            username: "Kakashi",
+            profilePicture:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMC1zgQRMFcF7ObKxY014jIauPiLaFuXrlQ&usqp=CAU",
+          },
+        ];
+        var randomUser = users[Math.floor(Math.random() * users.length)];
+        var randomMessage = "Hello from " + randomUser.username + "!";
+
+        addMessage(
+          randomUser.username,
+          randomMessage,
+          randomUser.profilePicture
+        );
+      }
+
+      setTimeout(function () {
+        simulateIncomingMessage();
+        setInterval(simulateIncomingMessage, 5000); // Repeat every 5 seconds
+      }, 2000); // Simulate an initial incoming message after 2 seconds
+    </script>
+  </body>
+</html>
