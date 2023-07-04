@@ -95,7 +95,7 @@
         chatHistory.forEach(function (message) {
           var div = document.createElement("div");
           div.innerHTML = `<img src="${message.profilePicture}" alt="Profile Picture">
-                        <span>${message.username}: ${message.text}</span>`;
+                          <span>${message.username}: ${message.text}</span>`;
           messageContainer.appendChild(div);
         });
 
@@ -118,6 +118,21 @@
 
         // Display the updated chat history
         displayChatHistory();
+
+        // Send a notification for new message
+        if (Notification.permission === "granted") {
+          var notification = new Notification("New Message", {
+            body: `You have a new message from ${username}`,
+            icon: profilePicture,
+          });
+
+          notification.onclick = function () {
+            // Handle notification click
+            // You can navigate to the chat window or perform any other action here
+            // For demo purposes, let's simply focus the browser window
+            window.focus();
+          };
+        }
       }
 
       // Function to handle sending a message
@@ -146,6 +161,11 @@
       // Display the initial chat history
       displayChatHistory();
 
+      // Request permission for notifications
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+      }
+
       // Simulate real-time notifications using setTimeout and setInterval
       function simulateIncomingMessage() {
         var users = [
@@ -163,7 +183,35 @@
             profilePicture:
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMC1zgQRMFcF7ObKxY014jIauPiLaFuXrlQ&usqp=CAU",
           },
+
+          {
+            username: "Itachi",
+            profilePicture: "https://images7.alphacoders.com/129/1299888.png",
+          },
+          {
+            username: "Hinata",
+            profilePicture: "https://images.alphacoders.com/135/135673.jpg",
+          },
+          {
+            username: "Kiba",
+            profilePicture: "https://images.alphacoders.com/546/546727.png",
+          },
+          {
+            username: "Shikamaru",
+            profilePicture: "https://images.alphacoders.com/135/135643.jpg",
+          },
+          {
+            username: "Rock Lee",
+            profilePicture: "https://images6.alphacoders.com/126/1264542.jpg",
+          },
+          {
+            username: "Neji",
+            profilePicture: "hhttps://images7.alphacoders.com/100/1008846.png",
+          },
+
+          // Add more users here
         ];
+
         var randomUser = users[Math.floor(Math.random() * users.length)];
         var randomMessage = "Hello from " + randomUser.username + "!";
 
